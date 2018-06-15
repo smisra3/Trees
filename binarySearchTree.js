@@ -107,20 +107,62 @@ Tree.prototype.preorderTraversal = function (node) {
  * @param {Object} node Is the root node from where we want to start the traversal to print the view.
  * @returns True or false whether the function executed successfully or not.
  */
-Tree.prototype.rightView = function (node) {
-  if(!node) 
-    return false;
-  var currentNode = node;
+Tree.prototype.rightView = function () {
+  var currentNode = this.root;
   console.log(currentNode.value);
-  while(currentNode) {
-    if(currentNode.rChild) {
+  while (currentNode) {
+    if (currentNode.rChild) {
       console.log(currentNode.rChild.value);
       currentNode = currentNode.rChild
-    } else if(currentNode.lChild){
+    } else if (currentNode.lChild) {
       console.log(currentNode.lChild.value);
       currentNode = currentNode.lChild;
     }
   }
 };
+
+/**
+ * This method is used to perform binary tree search.
+ * @param {Object} node Is the node from which we want to start the search.
+ * @param {Number} searchValue Is the value which we want to search in the tree.
+ * @returns True or false depending upon whether we found the node or not.
+ */
+Tree.prototype.search = function (searchValue) {
+  if (!searchValue)
+    return false;
+  var currentNode = this.root,
+    searchValueFound = 0;
+  while (currentNode) {
+    if (currentNode.value === searchValue) {
+      searchValueFound = 1;
+      break;
+    } else if (currentNode.value > searchValue) {
+      currentNode = currentNode.lChild;
+    } else if (currentNode.value < searchValue) {
+      currentNode = currentNode.rChild;
+    }
+  }
+  return searchValueFound ? true : false;
+};
+
+/**
+ * This method is used to find the height of the tree.
+ */
+Tree.prototype.height = function () {
+  var currentNode = this.root,
+    leftHeight,
+    rightHeight,
+    leftSubTree = this.root.lChild,
+    rightSubTree = this.root.rChild;
+  while (leftSubTree) {
+    if(leftSubTree.lChild) {
+      leftSubTree = leftSubTree.lChild;
+      leftHeight++;
+    } else if(leftSubTree.rChild){
+      leftSubTree = leftSubTree.rChild;
+      leftHeight++;
+    }
+  }
+}
 
 exports.Tree = Tree;
