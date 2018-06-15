@@ -2,9 +2,9 @@
  * This File creates a binary search tree and add helper functions to perform various operations on it.
  */
 
- /**
-  * This is the constructor for the class Tree.
-  */
+/**
+ * This is the constructor for the class Tree.
+ */
 function Tree() {
   this.root = null;
 }
@@ -63,7 +63,7 @@ Tree.prototype.getRoot = function () {
 /**
  * This method is used to traverse the current tree in inorder.
  * @param {Object} node Is the node from which we have to start the traversal in inorder. 
- * @returns True or false telling whether our fucntion executed successfully or not.
+ * @returns True or false telling whether our function executed successfully or not.
  */
 Tree.prototype.inorderTraversal = function (node) {
   if (!node)
@@ -72,6 +72,55 @@ Tree.prototype.inorderTraversal = function (node) {
   console.log(node.value);
   this.inorderTraversal(node.rChild);
   return true;
+};
+
+/**
+ * This method is used to do the postorder traversal of the binary search tree.
+ * @param {Object} node Is the node from which we have to start the traversal in postorder. 
+ * @returns True or false telling whether our function executed successfully or not.
+ */
+Tree.prototype.postorderTraversal = function (node) {
+  if (!node)
+    return false;
+  this.postorderTraversal(node.lChild);
+  this.postorderTraversal(node.rChild);
+  console.log(node.value);
+  return true;
+};
+
+/**
+ * This method is used to do the preorder traversal of the binary search tree.
+ * @param {Object} node Is the node from which we have to start the traversal in preorder. 
+ * @returns True or false telling whether our function executed successfully or not.
+ */
+Tree.prototype.preorderTraversal = function (node) {
+  if (!node)
+    return false;
+  console.log(node.value);
+  this.preorderTraversal(node.lChild);
+  this.preorderTraversal(node.rChild);
+  return true;
+};
+
+/**
+ * This method is used to print the right view of the binary searh tree.
+ * @param {Object} node Is the root node from where we want to start the traversal to print the view.
+ * @returns True or false whether the function executed successfully or not.
+ */
+Tree.prototype.rightView = function (node) {
+  if(!node) 
+    return false;
+  var currentNode = node;
+  console.log(currentNode.value);
+  while(currentNode) {
+    if(currentNode.rChild) {
+      console.log(currentNode.rChild.value);
+      currentNode = currentNode.rChild
+    } else if(currentNode.lChild){
+      console.log(currentNode.lChild.value);
+      currentNode = currentNode.lChild;
+    }
+  }
 };
 
 exports.Tree = Tree;
