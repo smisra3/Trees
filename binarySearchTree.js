@@ -49,7 +49,7 @@ Tree.prototype.addNode = function (value) {
       }
     }
   }
-  return this.root;
+  return this;
 };
 
 /**
@@ -119,6 +119,7 @@ Tree.prototype.rightView = function () {
       currentNode = currentNode.lChild;
     }
   }
+  return this;
 };
 
 /**
@@ -148,21 +149,26 @@ Tree.prototype.search = function (searchValue) {
 /**
  * This method is used to find the height of the tree.
  */
-Tree.prototype.height = function () {
-  var currentNode = this.root,
-    leftHeight,
-    rightHeight,
-    leftSubTree = this.root.lChild,
-    rightSubTree = this.root.rChild;
-  while (leftSubTree) {
-    if(leftSubTree.lChild) {
-      leftSubTree = leftSubTree.lChild;
-      leftHeight++;
-    } else if(leftSubTree.rChild){
-      leftSubTree = leftSubTree.rChild;
-      leftHeight++;
+Tree.prototype.__height = function () {
+  var nodeQueue = [],
+    size = 0,
+    height = 0;
+  if (!this.root)
+    return false;
+  nodeQueue.push(this.root);
+  while (nodeQueue.length) {
+    size = nodeQueue.length;
+    while (size--) {
+      poppedNode = nodeQueue.shift();
+      if (poppedNode.lChild)
+        nodeQueue.push(poppedNode.lChild)
+      if (poppedNode.rChild)
+        nodeQueue.push(poppedNode.rChild)
     }
+    height++;
   }
+  return height;
 }
 
-exports.Tree = Tree;
+var tree = new Tree();
+tree.addNode(2).addNode(1).addNode(0).addNode(10).addNode(11).addNode(8);
